@@ -33,7 +33,7 @@ return [
     'google' => [
         'client_id' => '866206251243-7go92m5d31ejlvbq899nse69pasbndt3.apps.googleusercontent.com',
         'client_secret' => 'mdR6Ufwgh0O1BfJNRZ9fISvV',
-        'redirect' => 'http://178.18.248.183/api/user/google/callback',
+        'redirect' => 'https://api.ascien.xyz/api/user/google/callback',
     ],
 
 ];
