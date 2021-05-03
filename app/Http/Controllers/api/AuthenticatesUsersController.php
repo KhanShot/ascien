@@ -126,6 +126,11 @@ class AuthenticatesUsersController extends Controller
         }
     }
 
+    // function loginValidate(Request $request)
+    // {
+    	
+    // }
+
     function registerValidate(Request $request){
         $messages = $this->messages();
 
@@ -211,7 +216,7 @@ class AuthenticatesUsersController extends Controller
             }
             return $this->errorResponse(404, "not_found");
         }
-        return $this->errorResponse(404, "фывфывфыв");
+        return $this->errorResponse(404, "some error occured");
     }
 
 }
