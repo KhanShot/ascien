@@ -29,11 +29,11 @@ trait ResponseTraits
         return response()->json($output, Utils::$SUCCESS_CODE);
     }
 
-    public function errorResponse($status_code, $message=null, $data=array()){
+    public function errorResponse($status_code, $message=null, $validation_error){
         $output['success'] = false;
         $output['status_code'] = $status_code;
         $output['message'] = $message;
-        $output['data'] = $data;
+        $output['validations'] = $validation_error;
         return response()->json($output, 400);
     }
 

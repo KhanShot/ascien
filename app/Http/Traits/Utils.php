@@ -18,6 +18,7 @@ class Utils
 
 
     public static $MESSAGE_AUTHENTICATED = "Выполнена авторизация!";
+    public static $MESSAGE_HAS_VALIDATION_ERRORS = "Вы ввели неправильные поля!";
     public static $MESSAGE_LOGIN_INCORRECT = "Неверный логин или пароль!";
     public static $MESSAGE_VERIFY_EMAIL = "Пожалуйста, подтвердите почту";
     public static $MESSAGE_VERIFY_EMAIL_SEND = "Ссылка для подтверждение почты, отправлано на вашу почту!";
