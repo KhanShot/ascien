@@ -155,6 +155,7 @@ class AuthenticatesUsersController extends Controller
 
     public function redirectToGoogle(Request $request){
         //return Socialite::driver("google")->with(['is_teacher'=>"yes"])->redirect();
+        
         return Socialite::driver('google')->redirect();
     }
 
