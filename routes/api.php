@@ -32,7 +32,7 @@ Route::prefix('user')->group(function (){
 
 
 
-Route::middleware(['auth:api',"verified", "teacherProfileCompleted"])->group(function () {
+Route::middleware(['auth:api',"mustVerifyEmail", "teacherProfileCompleted"])->group(function () {
     Route::get("user/info", "api\AuthenticatesUsersController@getUser");
 
     Route::post('/user/asTeacherAfterGmail/{value}/{email}', 'api\AuthenticatesUsersController@is_teacher');
