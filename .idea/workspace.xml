@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b09c0bfc-bd0d-4835-a0d5-69afd8a77694" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/commandlinetools/Laravel_5_8_21__3_45_PM.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/commandlinetools/schemas/frameworkDescriptionVersion1.1.4.xsd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/phpunit.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ascien.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ascien.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/AuthenticatesUsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/AuthenticatesUsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Traits/ResponseTraits.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Traits/ResponseTraits.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Traits/Utils.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Traits/Utils.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,7 +171,7 @@
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/lang/ru" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php.composer" />
+    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -204,7 +202,7 @@
       <workItem from="1616733537389" duration="35075000" />
       <workItem from="1617959698307" duration="11398000" />
       <workItem from="1619338757430" duration="3737000" />
-      <workItem from="1620467114272" duration="1459000" />
+      <workItem from="1620467114272" duration="3683000" />
     </task>
     <servers />
   </component>
@@ -221,5 +219,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
