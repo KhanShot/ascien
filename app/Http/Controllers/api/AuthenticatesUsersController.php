@@ -122,7 +122,7 @@ class AuthenticatesUsersController extends Controller
                 $access_token = auth()->user()->createToken('authToken')->accessToken;
                 $response["user"] = auth()->user();
                 $response['token'] = $access_token;
-                return $this->errorResponse("profile_not_completed", Utils::$MESSAGE_PROFILE_NOT_COMPLETED, $response);
+                return $this->errorResponse("profile_not_completed", Utils::$MESSAGE_PROFILE_NOT_COMPLETED, null, $response);
             }
 
             $token = auth()->user()->createToken('authToken')->accessToken;
@@ -165,7 +165,13 @@ class AuthenticatesUsersController extends Controller
 
 
     public function getUser(){
-        return $this->successResponse(\auth()->user());
+        return $this->successResponse(["user"=>\auth()->user()]);
+    }
+
+    public function logout(){
+        $user = Auth::user()->token();
+        $user->revoke();
+        return $this->successResponse(null,Utils::$MESSAGE_USER_LOGOUT);
     }
 
 
@@ -232,9 +238,9 @@ class AuthenticatesUsersController extends Controller
                 $response['token'] = $token;
                 return $this->successResponse($response, Utils::$MESSAGE_USER_DEFINED_AS_TEACHER);
             }
-            return $this->errorResponse(404, "not_found");
+            return $this->errorResponse(404, "not_found", null, null);
         }
-        return $this->errorResponse(404, "some error occured");
+        return $this->errorResponse(404, "some error occured", null, null);
     }
 
 }

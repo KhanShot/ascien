@@ -24,7 +24,6 @@ Route::prefix('user')->group(function (){
 
     Route::get('/verify/email/{id}/{hash}', 'api\AuthenticatesUsersController@verify')->name("email.verify");
 
-
     //google Auth
     Route::get('/google/redirect', 'api\AuthenticatesUsersController@redirectToGoogle');
     Route::get('/google/callback', 'api\AuthenticatesUsersController@handleGoogleCallback');
@@ -34,13 +33,14 @@ Route::prefix('user')->group(function (){
 
 
 Route::middleware(['auth:api',"verified", "teacherProfileCompleted"])->group(function () {
-    Route::get("userInfo", "api\AuthenticatesUsersController@getUser");
-    Route::post('/user/asTeacherAfterGmail/{value}/{email}', 'api\AuthenticatesUsersController@is_teacher');
+    Route::get("user/info", "api\AuthenticatesUsersController@getUser");
 
+    Route::post('/user/asTeacherAfterGmail/{value}/{email}', 'api\AuthenticatesUsersController@is_teacher');
+    Route::post("/user/logout",'api\AuthenticatesUsersController@logout');
 
     Route::prefix("/profile")->group(function (){
         Route::post("/student/update", "api\UserProfileController@updateStudentProfile");
-
+        Route::post("/teacher/update", "api\UserProfileController@updateTeacherProfile");
     });
 
 });

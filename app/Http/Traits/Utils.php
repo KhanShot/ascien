@@ -28,4 +28,6 @@ class Utils
     public static $MESSAGE_USER_DEFINED_AS_TEACHER = "Пользователь успешно зарегестрировался как учитель!";
 
     public static $MESSAGE_PROFILE_NOT_COMPLETED = "Профиль тичера не заполнена!";
+    public static $MESSAGE_USER_LOGOUT = "Вы вышли из системы!";
+    public static $MESSAGE_USER_PROFILE_UPDATED = "Ваша профиль обновлена!";
 }
