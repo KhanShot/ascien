@@ -37,7 +37,7 @@ class AuthenticatesUsersController extends Controller
         $validator = $this->registerValidate($request);
 
         if (!empty($validator)){
-            return $this->errorResponse(Utils::$STATUS_CODE_HAS_INCORRECT_FIELDS, ["errors"=>$validator]);
+            return $this->errorResponse(Utils::$STATUS_CODE_HAS_INCORRECT_FIELDS, Utils::$MESSAGE_HAS_VALIDATION_ERRORS ,$validator);
         }
         $newUser = $request->all();
         $newUser['password'] = Hash::make($request->password);
@@ -60,10 +60,10 @@ class AuthenticatesUsersController extends Controller
         $user = User::where("email", $email)->first();
 
         if (!$user){
-            return $this->errorResponse(Utils::$STATUS_CODE_NOT_FOUND, Utils::$MESSAGE_EMAIL_NOT_FOUND);
+            return $this->errorResponse(Utils::$STATUS_CODE_NOT_FOUND, Utils::$MESSAGE_EMAIL_NOT_FOUND, null);
         }
         if ($user->hasVerifiedEmail()){
-            return $this->successResponse($user,Utils::$MESSAGE_EMAIL_VERIFIED_ALREADY);
+            return $this->successResponse(["user"=>$user],Utils::$MESSAGE_EMAIL_VERIFIED_ALREADY);
         }
         $this->verificationSend($user);
         return $this->successResponse(null,Utils::$MESSAGE_VERIFY_EMAIL_SEND);
@@ -87,16 +87,25 @@ class AuthenticatesUsersController extends Controller
         }
 
         $user = User::find($id);
+
         if ($user->hasVerifiedEmail()){
-            return $this->successResponse($user,Utils::$MESSAGE_EMAIL_VERIFIED_ALREADY);
+            //return $this->successResponse($user,Utils::$MESSAGE_EMAIL_VERIFIED_ALREADY);
+            return Utils::$MESSAGE_EMAIL_VERIFIED_ALREADY;
         }
         $user->markEmailAsVerified();
 
-        return $this->successResponse($user, Utils::$MESSAGE_EMAIL_VERIFIED);
+        //return $this->successResponse($user, Utils::$MESSAGE_EMAIL_VERIFIED);
+        return  Utils::$MESSAGE_EMAIL_VERIFIED;
 
     }
 
     public function login(Request $request){
+        $validator = $this->loginValidate($request);
+
+        if (!empty($validator)){
+            return $this->errorResponse(Utils::$STATUS_CODE_HAS_INCORRECT_FIELDS, Utils::$MESSAGE_HAS_VALIDATION_ERRORS ,$validator);
+        }
+
         $credentials = [
             'email' => $request->email,
             'password' => $request->password
@@ -105,7 +114,7 @@ class AuthenticatesUsersController extends Controller
         if (auth()->attempt($credentials)) {
 
             if( is_null(auth()->user()->email_verified_at)){
-                return $this->errorResponse(Utils::$STATUS_CODE_EMAIL_NOT_VERIFIED, Utils::$MESSAGE_VERIFY_EMAIL,400);
+                return $this->errorResponse(Utils::$STATUS_CODE_EMAIL_NOT_VERIFIED, Utils::$MESSAGE_VERIFY_EMAIL,null);
             }
 
             if ($request->user() && $request->user()->is_teacher == 1 && $request->user()->is_completed == 0)
@@ -122,14 +131,22 @@ class AuthenticatesUsersController extends Controller
             return $this->successResponse($response, Utils::$MESSAGE_AUTHENTICATED);
 
         } else {
-            return $this->errorResponse(Utils::$STATUS_CODE_LOGIN_INCORRECT, Utils::$MESSAGE_LOGIN_INCORRECT,400);
+            return $this->errorResponse(Utils::$STATUS_CODE_LOGIN_INCORRECT, Utils::$MESSAGE_LOGIN_INCORRECT,null);
         }
     }
 
-    // function loginValidate(Request $request)
-    // {
-    	
-    // }
+     function loginValidate(Request $request)
+     {
+         $messages = $this->messages();
+
+         $validator = Validator::make($request->all(), [
+             "email" => "required",
+             "password" => "required|min:5"
+         ], $messages);
+         if ($validator->fails()) {
+             return $validator->errors();
+         }
+     }
 
     function registerValidate(Request $request){
         $messages = $this->messages();
