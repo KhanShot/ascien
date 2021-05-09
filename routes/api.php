@@ -40,7 +40,11 @@ Route::middleware(['auth:api',"mustVerifyEmail", "teacherProfileCompleted"])->gr
 
     Route::prefix("/profile")->group(function (){
         Route::post("/student/update", "api\UserProfileController@updateStudentProfile");
-        Route::post("/teacher/update", "api\UserProfileController@updateTeacherProfile");
+//        Route::post("/teacher/update", "api\UserProfileController@updateTeacherProfile");
     });
 
 });
+
+
+
+Route::post("profile/teacher/update", "api\UserProfileController@updateTeacherProfile")->middleware(['auth:api', "mustVerifyEmail"]);
