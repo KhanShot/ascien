@@ -57,11 +57,11 @@ class UserProfileController extends Controller
         $this->updateMainFields($request, $user);
 
         $contacts = [
-            "phone" => $request->get("phone"),
-            "youtube" => null,
-            "insta" => null,
-            "facebook" => null,
-            "linedln" => null
+            "phone" => $request->get("phone") ?? null,
+            "youtube" => $request->get("youtube") ?? null,
+            "insta" => $request->get("insta") ?? null,
+            "facebook" => $request->get("facebook") ?? null,
+            "linedln" => $request->get("linedln") ?? null
         ];
         $data = $request->except("phone");
         $data["user_id"] = $user->id;
