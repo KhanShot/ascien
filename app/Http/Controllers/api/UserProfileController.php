@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Traits\ResponseTraits;
 use Illuminate\Support\Facades\Storage;
 use Validator;
+use App\Models\TeachersProfile;
+
 
 class UserProfileController extends Controller
 {
@@ -23,6 +25,83 @@ class UserProfileController extends Controller
 
         $user = User::find(auth()->id());
 
+        $this->updateMainFields($request, $user);
+        $user->save();
+        return $this->successResponse(["user"=>$user],Utils::$MESSAGE_USER_PROFILE_UPDATED);
+
+    }
+
+    public function validateStudentProfile(Request $request){
+        $messages = $this->messages();
+
+        $validator = Validator::make($request->all(), [
+            "name" => "min:3",
+            "avatar" => 'mimes:jpeg,jpg,png,svg|max:3000',
+            "password" => "min:6"
+        ], $messages);
+        if ($validator->fails()) {
+            return $validator->errors();
+        }
+    }
+
+    public function updateTeacherProfile(Request $request){
+        $validator = $this->validateTeacherProfile($request);
+
+        if (!empty($validator)){
+            return $this->errorResponse(Utils::$STATUS_CODE_HAS_INCORRECT_FIELDS, Utils::$MESSAGE_HAS_VALIDATION_ERRORS ,$validator);
+        }
+        $user = User::with("teacher_profile")->find(auth()->id());
+
+
+//        $user = User::find(auth()->id());
+        $this->updateMainFields($request, $user);
+
+        $contacts = [
+            "phone" => $request->get("phone"),
+            "youtube" => null,
+            "insta" => null,
+            "facebook" => null,
+            "linedln" => null
+        ];
+        $data = $request->except("phone");
+        $data["user_id"] = $user->id;
+        $data['contacts'] = json_encode($contacts);
+
+        if (!TeachersProfile::where("user_id", $user->id)->first()){
+            if(TeachersProfile::create($data)){
+                $user->is_completed = 1;
+                $user->save();
+            }
+        }else{
+            TeachersProfile::where("user_id", $user->id)->update($data);
+            $user->is_completed = 1;
+            $user->save();
+        }
+
+        return $this->successResponse(["user"=>$user], Utils::$MESSAGE_USER_PROFILE_UPDATED);
+
+    }
+
+    public function validateTeacherProfile(Request $request){
+        $messages = $this->messages();
+
+        $validator = Validator::make($request->all(), [
+            "education_format" => "required",
+            "videomakeing_experience" => 'required',
+            "auditory" => 'required',
+            "birthday" => 'date',
+            "education" => 'required',
+            "phone" => 'required',
+            "specialty" => "required"
+
+        ], $messages);
+        if ($validator->fails()) {
+            return $validator->errors();
+        }
+    }
+
+
+    function updateMainFields(Request $request, $user){
         $path = $user->avatar ?? "images/defaultAvatar.png";
         if ($request->hasFile("avatar")){
 
@@ -38,30 +117,7 @@ class UserProfileController extends Controller
         if ($request->has("name"))
             $user->name = $request->input("name");
 
-        $user->save();
 
-        return $this->successResponse(["user"=>$user],Utils::$MESSAGE_USER_PROFILE_UPDATED);
-
-    }
-
-    public function updateTeacherProfile(Request $request){
-        $user = User::find(auth()->id());
-
-
-    }
-
-
-    public function validateStudentProfile(Request $request){
-        $messages = $this->messages();
-
-        $validator = Validator::make($request->all(), [
-            "name" => "min:3",
-            "avatar" => 'mimes:jpeg,jpg,png,svg|max:3000',
-            "password" => "min:6"
-        ], $messages);
-        if ($validator->fails()) {
-            return $validator->errors();
-        }
     }
 
 
