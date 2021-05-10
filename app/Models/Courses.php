@@ -15,7 +15,10 @@ class Courses extends Model
         "user_id", "title", "category_id", "short_description", "language",
         "description", "level", "image", "intro_video", "requirements",
         "what_will_learn", "is_free", "price", "sale_price", "certificate", "status"
-
     ];
 
+
+    public function sections(){
+        return $this->hasMany("App\Models\Sections", "course_id");
+    }
 }

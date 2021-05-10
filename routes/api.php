@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -46,9 +47,18 @@ Route::middleware(['auth:api',"mustVerifyEmail", "teacherProfileCompleted"])->gr
 
     Route::prefix("/teacher/courses")->group(function (){
         Route::post("/store", "api\CourseController@store");
-//        Route::post("/teacher/update", "api\UserProfileController@updateTeacherProfile");
+
     });
 
+    Route::prefix("/teacher/courses/")->group(function (){
+        Route::post("/create/lesson", "api\LessonsController@store");
+        Route::post("/delete/lesson/{lesson_id}", "api\LessonsController@deleteLesson");
+
+        Route::post("/create/section", "api\LessonsController@createSection");
+        Route::get("/getLastSection/{course_id}", "api\LessonsController@getLastAddedSection");
+        Route::post("/delete/section/{section_id}", "api\LessonsController@deleteSection");
+
+    });
 });
 
 
