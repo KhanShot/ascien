@@ -144,5 +144,4 @@ class LessonsController extends Controller
         return $this->errorResponse(Utils::$STATUS_CODE_NOT_FOUND, Utils::$MESSAGE_DATA_NOT_FOUND, null );
     }
 
-
 }

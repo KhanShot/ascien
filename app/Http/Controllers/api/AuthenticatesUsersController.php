@@ -176,35 +176,33 @@ class AuthenticatesUsersController extends Controller
 
 
 
-    public function redirectToGoogle(Request $request){
-        //return Socialite::driver("google")->with(['is_teacher'=>"yes"])->redirect();
-        
-        return Socialite::driver('google')->redirect();
-    }
+    public function googleAuth(Request $request){
 
-    public function handleGoogleCallback(){
+        if ($request->has("email")){
+            $user = User::where("email", $request->email)->first();
 
-        try {
+            if ($user){
+                if (is_null($user->socialite_id)){
+                    $user->socialite_id = $request->google_id ?? null;
+                    $user->socialite_key = "google";
+                    $user->save();
+                }
 
-            $user = Socialite::driver('google')->user();
-
-
-            $finduser = User::where("socialite_key", "google")->where('socialite_id', $user->id)->first();
-
-            if($finduser){
-
-                Auth::login($finduser);
-
+                Auth::login($user);
                 $token = auth()->user()->createToken('authToken')->accessToken;
                 $response["user"] = auth()->user();
                 $response['token'] = $token;
                 return $this->successResponse($response, Utils::$MESSAGE_AUTHENTICATED);
-
             }else{
+                $validator = $this->validateGoogleAuth($request);
+
+                if (!empty($validator)){
+                    return $this->errorResponse(Utils::$STATUS_CODE_HAS_INCORRECT_FIELDS, Utils::$MESSAGE_HAS_VALIDATION_ERRORS ,$validator);
+                }
                 $newUser = User::create([
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'socialite_id'=> $user->id,
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'socialite_id'=> $request->google_id,
                     "socialite_key" => "google",
                     "email_verified_at" => now(),
                     'password' => Hash::make(Str::random(7))
@@ -217,12 +215,25 @@ class AuthenticatesUsersController extends Controller
                 $response['token'] = $token;
                 return $this->successResponse($response, Utils::$MESSAGE_AUTHENTICATED);
             }
-
-        } catch (Exception $e) {
-            throw new $e;
         }
+        return $this->errorResponse(Utils::$STATUS_CODE_LOGIN_INCORRECT, Utils::$MESSAGE_LOGIN_INCORRECT,null);
+
+
     }
 
+    function validateGoogleAuth(Request $request){
+        $messages = $this->messages();
+
+        $validator = Validator::make($request->all(), [
+            "name" => "required|min:3",
+            "email" => "required|unique:users",
+            "google_id" => "required"
+        ], $messages);
+        if ($validator->fails()) {
+            return $validator->errors();
+        }
+
+    }
 
     public function is_teacher($value, $email){
         if ($value == 1){

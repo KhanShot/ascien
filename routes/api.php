@@ -26,8 +26,7 @@ Route::prefix('user')->group(function (){
     Route::get('/verify/email/{id}/{hash}', 'api\AuthenticatesUsersController@verify')->name("email.verify");
 
     //google Auth
-    Route::get('/google/redirect', 'api\AuthenticatesUsersController@redirectToGoogle');
-    Route::get('/google/callback', 'api\AuthenticatesUsersController@handleGoogleCallback');
+    Route::post('/google/auth', 'api\AuthenticatesUsersController@googleAuth');
 
 });
 
