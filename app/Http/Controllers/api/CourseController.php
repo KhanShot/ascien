@@ -45,7 +45,7 @@ class CourseController extends Controller
     }
 
     public function search(Request $request){
-        $courses = Courses::where("category_id", 4);
+        $courses = Courses::where("category_id", "!=" ,0);
 
         if ($request->has("category_id"))
             $courses->where("category_id", $request->get("category_id"));
