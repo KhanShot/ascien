@@ -48,6 +48,9 @@ Route::middleware(['auth:api',"mustVerifyEmail", "teacherProfileCompleted"])->gr
 
     Route::prefix("/teacher/courses/")->group(function (){
         Route::post("/store", "api\CourseController@store");
+        Route::get("/all", "api\CourseController@getTeachersCourses");
+
+
         Route::post("/create/lesson", "api\LessonsController@store");
         Route::post("/delete/lesson/{lesson_id}", "api\LessonsController@deleteLesson");
 
@@ -64,6 +67,7 @@ Route::middleware(['auth:api',"mustVerifyEmail", "teacherProfileCompleted"])->gr
             Route::post("/delete/{wish_id}", "api\WishlistController@deleteWish");
         });
 
+//        Route::prefix("/reviews")
     });
 
 

@@ -27,11 +27,15 @@ class CourseController extends Controller
 
         $data["user_id"] = auth()->id();
         $data["what_will_learn"] = json_encode($data['what_will_learn']);
-        $data["requirements"] = json_encode($data['requirements']);
+        $data["requirements"] = isset($data["requirements"]) ? json_encode($data['requirements']) : null;
 
         $course = Courses::create($data);
 
         return $this->successResponse(["course"=>$course], Utils::$MESSAGE_COURSE_UPLOADED_SUCCESS);
+    }
+
+    public function getTeachersCourses(){
+        return Courses::where("user_id", auth()->id())->get();
     }
 
     public function getOnlyCategories(){
