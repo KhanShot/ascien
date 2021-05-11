@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\Utils;
+use App\Models\CourseCategories;
 use Illuminate\Http\Request;
 use App\Http\Traits\ResponseTraits;
 use App\Models\Courses;
@@ -35,7 +36,9 @@ class CourseController extends Controller
         return $this->successResponse(["course"=>$course], Utils::$MESSAGE_COURSE_UPLOADED_SUCCESS);
     }
 
-
+    public function getOnlyCategories(){
+        return CourseCategories::all();
+    }
     public function validateCourse(Request $request){
         $messages = $this->messages();
 

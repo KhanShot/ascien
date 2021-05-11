@@ -29,6 +29,7 @@ Route::prefix('user')->group(function (){
     Route::post('/google/auth', 'api\AuthenticatesUsersController@googleAuth');
 
 });
+Route::post("profile/teacher/update", "api\UserProfileController@updateTeacherProfile")->middleware(['auth:api', "mustVerifyEmail"]);
 
 
 
@@ -61,5 +62,8 @@ Route::middleware(['auth:api',"mustVerifyEmail", "teacherProfileCompleted"])->gr
 });
 
 
+Route::get("/courses/getOnlyCategories", "api\CourseController@getOnlyCategories");
 
-Route::post("profile/teacher/update", "api\UserProfileController@updateTeacherProfile")->middleware(['auth:api', "mustVerifyEmail"]);
+
+
+
