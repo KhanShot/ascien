@@ -25,13 +25,11 @@ class CourseController extends Controller
         $data = $this->uploadFiles($request, $data);
         $data = $this->setPrice($request, $data);
 
-//        return $data;
-
         $data["user_id"] = auth()->id();
         $data["what_will_learn"] = json_encode($data['what_will_learn']);
         $data["requirements"] = json_encode($data['requirements']);
 
-
+        $course = Courses::create($data);
 
         return $this->successResponse(["course"=>$course], Utils::$MESSAGE_COURSE_UPLOADED_SUCCESS);
     }
@@ -105,8 +103,8 @@ class CourseController extends Controller
             "language" => "required",
             "description" => "required",
             "level" => "required",
-            "image" => 'required|mimes:jpeg,jpg,png,svg|max:3000',
-            "intro_video" => "required|mimes:mp4,mov,ogg,qt | max:50000",
+            "image" => 'required|mimes:jpeg,jpg,png|max:3000',
+            "intro_video" => "required|mimes:mp4,mov | max:50000",
 //            "requirements" => "required",
             "what_will_learn" => "required",
 //            "is_free" => "required",

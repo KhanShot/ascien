@@ -45,12 +45,9 @@ Route::middleware(['auth:api',"mustVerifyEmail", "teacherProfileCompleted"])->gr
     });
 
 
-    Route::prefix("/teacher/courses")->group(function (){
-        Route::post("/store", "api\CourseController@store");
-
-    });
 
     Route::prefix("/teacher/courses/")->group(function (){
+        Route::post("/store", "api\CourseController@store");
         Route::post("/create/lesson", "api\LessonsController@store");
         Route::post("/delete/lesson/{lesson_id}", "api\LessonsController@deleteLesson");
 
@@ -59,6 +56,17 @@ Route::middleware(['auth:api',"mustVerifyEmail", "teacherProfileCompleted"])->gr
         Route::post("/delete/section/{section_id}", "api\LessonsController@deleteSection");
 
     });
+
+    Route::prefix("/student/")->group(function (){
+        Route::prefix("/wishlist")->group(function (){
+            Route::post("/store/{course_id}", "api\WishlistController@addToWishList");
+            Route::get("/get", "api\WishlistController@getWishList");
+            Route::post("/delete/{wish_id}", "api\WishlistController@deleteWish");
+        });
+
+    });
+
+
 });
 
 

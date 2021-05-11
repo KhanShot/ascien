@@ -36,7 +36,7 @@ class UserProfileController extends Controller
 
         $validator = Validator::make($request->all(), [
             "name" => "min:3",
-            "avatar" => 'mimes:jpeg,jpg,png,svg|max:3000',
+            "avatar" => 'mimes:jpeg,jpg,png|max:3000',
             "password" => "min:6"
         ], $messages);
         if ($validator->fails()) {

@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b09c0bfc-bd0d-4835-a0d5-69afd8a77694" name="Default Changelist" comment="" />
+    <list default="true" id="b09c0bfc-bd0d-4835-a0d5-69afd8a77694" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/AuthenticatesUsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/AuthenticatesUsersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/CourseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/UserProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/UserProfileController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/WishlistController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/WishlistController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Traits/Utils.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Traits/Utils.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Wishlist.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Wishlist.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

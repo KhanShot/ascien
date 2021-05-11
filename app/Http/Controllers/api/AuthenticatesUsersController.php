@@ -179,11 +179,17 @@ class AuthenticatesUsersController extends Controller
 
         if ($request->has("email")){
             $user = User::where("email", $request->email)->first();
-
+//            return now();
             if ($user){
                 if (is_null($user->socialite_id)){
                     $user->socialite_id = $request->google_id ?? null;
                     $user->socialite_key = "google";
+                    $user->email_verified_at = now();
+                    $user->save();
+
+                }
+                if (is_null($user->email_verified_at)){
+                    $user->email_verified_at = now();
                     $user->save();
                 }
 

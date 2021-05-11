@@ -14,6 +14,8 @@ class Utils
     public static $STATUS_CODE_HAS_INCORRECT_FIELDS = "has_incorrect_fields";
     public static $STATUS_CODE_NOT_FOUND = "data_not_found";
     public static $STATUS_CODE_PROFILE_NOT_COMPLETED = "profile_not_completed";
+    public static $STATUS_CODE_ALREADY_EXISTS = "data_already_exists";
+
 
 
 
@@ -34,7 +36,8 @@ class Utils
 
     public static $MESSAGE_COURSE_UPLOADED_SUCCESS = "Гуд джоб!";
     public static $MESSAGE_SMTH_DELETED = "Успешно удалена из базы!";
+    public static $MESSAGE_SUCCESS_ADDED = "Успешно добавлена в базу!";
     public static $MESSAGE_DATA_NOT_FOUND = "То что вы ищете не существует!";
-//    public static $MESSAGE_COURSE_UPLOADED_SUCCESS = "Гуд джоб!";
+    public static $MESSAGE_ALREADY_EXISTS = "Уже существует в Базе!";
 //    public static $MESSAGE_USER_PROFILE_UPDATED = "Ваша профиль обновлена!";
 }
