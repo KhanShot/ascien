@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\api\api;
+namespace App\Http\Controllers\api;
 
-use App\Http\Controllers\api\Controller;
+use App\Http\Controllers\Controller;
 
 use App\Models\User;
 
-use http\Exception\InvalidArgumentException;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Http\Request;
 
