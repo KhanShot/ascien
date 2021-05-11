@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Validator;
 use App\Models\Courses;
 use App\Models\Lessons;
+use Owenoj\LaravelGetId3\GetId3;
 
 class LessonsController extends Controller
 {
@@ -26,10 +27,10 @@ class LessonsController extends Controller
         }
         $data = $request->all();
         if ($request->hasFile("video_url")){
-
-
+            $track = new GetId3(request()->file('video_url'));
             $path = $request->file("video_url")->store("courses/videos", "s3");
             $data["video_url"] = $path;
+            $data["duration"] = $track->getPlaytime();
         }
 
         $data["description"] = $request->get("description", null);

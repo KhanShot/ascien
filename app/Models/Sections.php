@@ -15,7 +15,13 @@ class Sections extends Model
 
     public $timestamps = false;
 
-    public function lessons(){
+    public function lessons(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany("App\Models\Lessons", "section_id");
+    }
+
+    public function publicLessons(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany("App\Models\Lessons", "section_id");
     }
 

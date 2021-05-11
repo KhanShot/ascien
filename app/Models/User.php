@@ -33,7 +33,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'socialite_key',
         'socialite_id',
         'is_teacher',
-        'is_completed'
+        'is_completed',
+        "email_verified_at"
     ];
 
     /**

@@ -11,6 +11,8 @@ class Lessons extends Model
 
     protected $fillable = [
       "section_id", "title", "description", "content_type", "video_url",
-        "presentation_file", "article_text", "resources", "quiz_id"
+        "presentation_file", "article_text", "resources", "quiz_id", "duration"
     ];
+
+
 }

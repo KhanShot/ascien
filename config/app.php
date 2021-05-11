@@ -180,6 +180,8 @@ return [
         Laravel\Passport\PassportServiceProvider::class,
         //socialite
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Owenoj\LaravelGetId3\GetId3ServiceProvider::class,
+
     ],
 
     /*

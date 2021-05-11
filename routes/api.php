@@ -62,7 +62,13 @@ Route::middleware(['auth:api',"mustVerifyEmail", "teacherProfileCompleted"])->gr
 });
 
 
+
+Route::get("/courses/getTopCourses", "api\CourseController@getTopCourses");
+Route::get("/courses/search", "api\CourseController@search");
+
 Route::get("/courses/getOnlyCategories", "api\CourseController@getOnlyCategories");
+Route::get("/courses/getDetailPublicCourse/{course_id}", "api\CourseController@getDetailPublicCourse");
+Route::get("/courses/getCoursesByCategory/{category_id}", "api\CourseController@getCoursesByCategory");
 
 
 

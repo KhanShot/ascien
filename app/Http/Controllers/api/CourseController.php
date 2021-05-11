@@ -32,13 +32,69 @@ class CourseController extends Controller
         $data["requirements"] = json_encode($data['requirements']);
 
 
-        $course = Courses::create($data);
+
         return $this->successResponse(["course"=>$course], Utils::$MESSAGE_COURSE_UPLOADED_SUCCESS);
     }
 
     public function getOnlyCategories(){
-        return CourseCategories::all();
+        return CourseCategories::withCount("courses")->get();
     }
+
+    public function getTopCourses(){
+        return Courses::all()->take(10);
+    }
+
+    public function search(Request $request){
+        $courses = Courses::where("category_id", 4);
+
+        if ($request->has("category_id"))
+            $courses->where("category_id", $request->get("category_id"));
+
+        if ($request->has("q"))
+            $courses->where('title', 'like', "%". $request->get("q") .'%');
+
+        if ($request->has("price")){
+            if ($request->price == "free")
+                $courses->where("is_free", 1);
+            if ($request->price == "paid")
+                $courses->where("is_free", 0);
+
+        }
+        //wishlist search
+//
+//        if (auth()){
+//
+//        }
+
+        //reviews
+//        if ($request->has("reviews")){
+//            $courses->orderBy("reviews", "desc");
+//        }
+
+
+
+
+//        dd($courses->get());
+        return $courses->get();
+    }
+
+
+    public function getCoursesByCategory($category_id){
+//        return CourseCategories::with("courses")->find($category_id);
+        return Courses::where("category_id", $category_id)->get();
+    }
+
+    public function getDetailPublicCourse($course_id){
+        $course = Courses::with(["sections.lessons"=>function($query){
+            $query->select("id", "title", "content_type", "description", "duration" , "section_id");
+        }])->find($course_id);
+        if ($course){
+            return $course;
+        }
+        return $this->errorResponse(Utils::$STATUS_CODE_NOT_FOUND, Utils::$MESSAGE_DATA_NOT_FOUND, null);
+    }
+
+
     public function validateCourse(Request $request){
         $messages = $this->messages();
 
@@ -51,7 +107,7 @@ class CourseController extends Controller
             "level" => "required",
             "image" => 'required|mimes:jpeg,jpg,png,svg|max:3000',
             "intro_video" => "required|mimes:mp4,mov,ogg,qt | max:50000",
-            "requirements" => "required",
+//            "requirements" => "required",
             "what_will_learn" => "required",
 //            "is_free" => "required",
 //            "price" => "required",
