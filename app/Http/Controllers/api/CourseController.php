@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\api\api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\api\Controller;
 use App\Http\Traits\Utils;
 use App\Models\CourseCategories;
 use Illuminate\Http\Request;
