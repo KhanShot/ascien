@@ -72,7 +72,11 @@ class LessonsController extends Controller
 
 
     function getDetailCourseTeacher($course_id){
-        return Courses::with("sections", "sections.lessons")->find($course_id);
+        $course = Courses::where("user_id", auth()->id())->with("sections", "sections.lessons")->find($course_id);
+        if ($course){
+            return $course;
+        }
+        return $this->errorResponse(Utils::$STATUS_CODE_NOT_FOUND, Utils::$MESSAGE_DATA_NOT_FOUND, null);
     }
 
     public function validateSection(Request $request){

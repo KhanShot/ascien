@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 
 class Courses extends Model
@@ -28,4 +29,15 @@ class Courses extends Model
     public function wishlist(){
         return $this->hasOne("App\Models\Wishlist", "course_id");
     }
+    public function reviews(){
+        return $this->hasMany("App\Models\Reviews", "course_id");
+    }
+
+    public function ratings(){
+        return $this->hasMany("App\Models\Ratings", "course_id")
+            ->selectRaw("avg(rating) as avgRating, course_id");
+    }
+
+
+
 }

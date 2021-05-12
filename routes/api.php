@@ -74,6 +74,9 @@ Route::middleware(['auth:api',"mustVerifyEmail", "teacherProfileCompleted"])->gr
             Route::post("/store", "api\ReviewsController@store");
             Route::post("/delete/{review_id}", "api\ReviewsController@deleteReview");
         });
+
+        Route::post("/ratings/create", "api\RatingsController@store");
+        Route::post("/generate/paymentUrl/{course_id}", "api\PaymentController@paymentUrl");
     });
 
 });

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\api;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +24,8 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-//Route::get("/payment", "App\Http\Controllers\Payment" );
+Route::get("/payment/{user_id}/{course_id}", [App\Http\Controllers\api\PaymentController::class, 'index'])->name("payment");
+
+Route::post("/payment/create",[App\Http\Controllers\api\PaymentController::class, 'makePayment'] )->name("makePayment");
+
+Route::get("/payment/success", [App\Http\Controllers\api\PaymentController::class, 'success'])->name("payment.success");

@@ -39,5 +39,7 @@ class Utils
     public static $MESSAGE_SUCCESS_ADDED = "Успешно добавлена в базу!";
     public static $MESSAGE_DATA_NOT_FOUND = "То что вы ищете не существует!";
     public static $MESSAGE_ALREADY_EXISTS = "Уже существует в Базе!";
+
+    public static $MESSAGE_DATA_HAS_BEEN_MODIFIED = "Данные обнавлены!";
 //    public static $MESSAGE_USER_PROFILE_UPDATED = "Ваша профиль обновлена!";
 }

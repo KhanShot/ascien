@@ -64,7 +64,6 @@ class CourseController extends Controller
                 $courses->where("is_free", 1);
             if ($request->price == "paid")
                 $courses->where("is_free", 0);
-
         }
         //wishlist search
 //
@@ -92,11 +91,12 @@ class CourseController extends Controller
 
     public function getDetailPublicCourse(Request  $request, $course_id){
 
-
         $course = Courses::with(["sections.lessons"=>function($query){
             $query->select("id", "title", "content_type", "description", "duration" , "section_id");
-        }])->find($course_id);
+        }, "reviews", "ratings"])->find($course_id);
         if ($course){
+//            $course->ratings = isset($course->ratings[0]) ? $course->ratings[0]->avgRating : null;
+            $course["avgRating"] = isset($course->ratings[0]) ? $course->ratings[0]->avgRating : null;
             return $course;
         }
         return $this->errorResponse(Utils::$STATUS_CODE_NOT_FOUND, Utils::$MESSAGE_DATA_NOT_FOUND, null);
