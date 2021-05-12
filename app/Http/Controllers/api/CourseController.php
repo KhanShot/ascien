@@ -34,6 +34,10 @@ class CourseController extends Controller
         return $this->successResponse(["course"=>$course], Utils::$MESSAGE_COURSE_UPLOADED_SUCCESS);
     }
 
+    public function getCourse($course_id){
+        return Courses::with("sections.lessons")->where("user_id", auth()->id())->find($course_id);
+    }
+
     public function getTeachersCourses(){
         return Courses::where("user_id", auth()->id())->get();
     }
@@ -86,7 +90,9 @@ class CourseController extends Controller
         return Courses::where("category_id", $category_id)->get();
     }
 
-    public function getDetailPublicCourse($course_id){
+    public function getDetailPublicCourse(Request  $request, $course_id){
+
+
         $course = Courses::with(["sections.lessons"=>function($query){
             $query->select("id", "title", "content_type", "description", "duration" , "section_id");
         }])->find($course_id);

@@ -50,6 +50,8 @@ Route::middleware(['auth:api',"mustVerifyEmail", "teacherProfileCompleted"])->gr
         Route::post("/store", "api\CourseController@store");
         Route::get("/all", "api\CourseController@getTeachersCourses");
 
+        Route::get("/get/{course_id}", "api\CourseController@getCourse");
+
 
         Route::post("/create/lesson", "api\LessonsController@store");
         Route::post("/delete/lesson/{lesson_id}", "api\LessonsController@deleteLesson");
@@ -57,6 +59,7 @@ Route::middleware(['auth:api',"mustVerifyEmail", "teacherProfileCompleted"])->gr
         Route::post("/create/section", "api\LessonsController@createSection");
         Route::get("/getLastSection/{course_id}", "api\LessonsController@getLastAddedSection");
         Route::post("/delete/section/{section_id}", "api\LessonsController@deleteSection");
+        Route::post("/update/section/{section_id}", "api\LessonsController@updateSection");
 
     });
 
@@ -67,9 +70,11 @@ Route::middleware(['auth:api',"mustVerifyEmail", "teacherProfileCompleted"])->gr
             Route::post("/delete/{wish_id}", "api\WishlistController@deleteWish");
         });
 
-//        Route::prefix("/reviews")
+        Route::prefix("/reviews")->group(function (){
+            Route::post("/store", "api\ReviewsController@store");
+            Route::post("/delete/{review_id}", "api\ReviewsController@deleteReview");
+        });
     });
-
 
 });
 

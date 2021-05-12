@@ -24,4 +24,8 @@ class Courses extends Model
     public function sections(){
         return $this->hasMany("App\Models\Sections", "course_id");
     }
+
+    public function wishlist(){
+        return $this->hasOne("App\Models\Wishlist", "course_id");
+    }
 }

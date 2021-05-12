@@ -109,6 +109,8 @@ class LessonsController extends Controller
     }
 
 
+
+
     public function deleteLesson($lesson_id){
         $lesson = Lessons::find($lesson_id);
         if ($lesson){
