@@ -8,6 +8,7 @@ use App\Models\CourseCategories;
 use Illuminate\Http\Request;
 use App\Http\Traits\ResponseTraits;
 use App\Models\Courses;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Validator;
 
@@ -47,11 +48,23 @@ class CourseController extends Controller
     }
 
     public function getTopCourses(){
-        return Courses::all()->take(10);
+        return $this->getAvgRatingsFromCourses(Courses::with("ratings")->get());
+    }
+
+    public function getAvgRatingsFromCourses(Collection $courses){
+        foreach ($courses as $course){
+
+            if ($course->rating){
+                return $course->ratings;
+            }
+            $course["avgRating"] = $this->getAvgRatingsFromSingleCourse($course->ratings ?? array());
+        }
+
+        return $courses;
     }
 
     public function search(Request $request){
-        $courses = Courses::where("category_id", "!=" ,0);
+        $courses = Courses::with("ratings")->where("category_id", "!=" ,0);
 
         if ($request->has("category_id"))
             $courses->where("category_id", $request->get("category_id"));
@@ -80,7 +93,8 @@ class CourseController extends Controller
 
 
 //        dd($courses->get());
-        return $courses->get();
+
+        return $this->getAvgRatingsFromCourses($courses->get());
     }
 
 
@@ -94,13 +108,25 @@ class CourseController extends Controller
         $course = Courses::with(["sections.lessons"=>function($query){
             $query->select("id", "title", "content_type", "description", "duration" , "section_id");
         }, "reviews", "ratings"])->find($course_id);
+
         if ($course){
 //            $course->ratings = isset($course->ratings[0]) ? $course->ratings[0]->avgRating : null;
-            $course["avgRating"] = isset($course->ratings[0]) ? $course->ratings[0]->avgRating : null;
+            $course["avgRating"] = $this->getAvgRatingsFromSingleCourse($course->ratings??array());;
             return $course;
         }
         return $this->errorResponse(Utils::$STATUS_CODE_NOT_FOUND, Utils::$MESSAGE_DATA_NOT_FOUND, null);
     }
+
+    private function getAvgRatingsFromSingleCourse($ratings = array()){
+        $total = 0;
+        foreach ($ratings as $rating){
+            $total = $total + $rating->rating;
+        }
+        if (sizeof($ratings) == 0)
+            return null;
+        return $total / sizeof($ratings);
+    }
+
 
 
     public function validateCourse(Request $request){
