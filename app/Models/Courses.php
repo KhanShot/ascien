@@ -18,6 +18,10 @@ class Courses extends Model
         "what_will_learn", "is_free", "price", "sale_price", "certificate", "status"
     ];
 
+    public function instructor(){
+        return $this->belongsTo("App\Models\User", "user_id");
+    }
+
     public function category(){
         return $this->belongsTo("App\Models\CourseCategories", "category_id");
     }

@@ -48,7 +48,7 @@ class CourseController extends Controller
     }
 
     public function getTopCourses(){
-        return $this->getAvgRatingsFromCourses(Courses::with("ratings")->get());
+        return $this->getAvgRatingsFromCourses(Courses::with("ratings", "instructor")->get());
     }
 
     public function getAvgRatingsFromCourses(Collection $courses){
@@ -64,7 +64,7 @@ class CourseController extends Controller
     }
 
     public function search(Request $request){
-        $courses = Courses::with("ratings")->where("category_id", "!=" ,0);
+        $courses = Courses::with("ratings", "instructor")->where("category_id", "!=" ,0);
 
         if ($request->has("category_id"))
             $courses->where("category_id", $request->get("category_id"));
@@ -107,7 +107,7 @@ class CourseController extends Controller
 
         $course = Courses::with(["sections.lessons"=>function($query){
             $query->select("id", "title", "content_type", "description", "duration" , "section_id");
-        }, "reviews", "ratings"])->find($course_id);
+        }, "reviews", "ratings", "instructor"])->find($course_id);
 
         if ($course){
 //            $course->ratings = isset($course->ratings[0]) ? $course->ratings[0]->avgRating : null;
