@@ -40,7 +40,8 @@ class Courses extends Model
     public function ratings(){
         return $this->hasMany("App\Models\Ratings", "course_id")
 //            ->selectRaw("avg(rating) as avgRating, course_id");
-        ->selectRaw("rating, course_id");
+        ->selectRaw("rating, course_id")
+            ->groupBy("course_id");
     }
 
 
