@@ -14,5 +14,9 @@ class Lessons extends Model
         "presentation_file", "article_text", "resources", "quiz_id", "duration"
     ];
 
+    public function watched(){
+        return $this->hasOne("App\Models\StudentCourses", "lesson_id");
+    }
+
 
 }
