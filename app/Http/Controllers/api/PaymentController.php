@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Traits\Utils;
 use App\Models\Courses;
 use App\Models\Payment;
+use App\Models\StudentCoursesList;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
@@ -45,7 +46,7 @@ class PaymentController extends Controller
 
         $url = URL::temporarySignedRoute("payment", now()->addMinutes(5), ["user_id" => $user->id, "course_id" => $course_id]);
 
-        return $url;
+        return $this->successResponse(["payment_url" => $url], "НА ТЕБЕ ПЕЙМЕНТ ЮРИ");
     }
 
 
@@ -56,12 +57,21 @@ class PaymentController extends Controller
         $data["price"] = $request->price;
 
 //        dd($data);
-        Payment::create($data);
-        return redirect()->route("payment.success");
+        $payment = Payment::insertGetId($data);
+
+        $data_redirect = ["user_id" => $data["user_id"], "course_id" => $data["course_id"], "payment_id" => $payment];
+
+        return redirect()->route("payment.success", $data_redirect );
 
 
     }
-    public function success(){
+    public function success(Request $request, $user_id, $course_id, $payment_id){
+
+        $data_redirect = ["user_id" => $user_id, "course_id" => $course_id, "payment_id" => $payment_id];
+//        dd($data_redirect);
+        $data = StudentCoursesList::where("payment_id", $payment_id)->where("user_id", $user_id)->where("course_id", $course_id)->first();
+        if (!$data)
+            StudentCoursesList::create($data_redirect);
         return view("payments.success");
     }
 

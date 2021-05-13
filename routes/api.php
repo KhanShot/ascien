@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\StudentCoursesList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -74,6 +75,10 @@ Route::middleware(['auth:api',"mustVerifyEmail", "teacherProfileCompleted"])->gr
             Route::post("/store", "api\ReviewsController@store");
             Route::post("/delete/{review_id}", "api\ReviewsController@deleteReview");
         });
+        Route::prefix("/myCourses")->group(function (){
+            Route::get("/all", "api\StudentCoursesController@getMyCourses");
+        });
+
 
         Route::post("/ratings/create", "api\RatingsController@store");
         Route::post("/generate/paymentUrl/{course_id}", "api\PaymentController@paymentUrl");
